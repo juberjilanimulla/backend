@@ -1,11 +1,10 @@
-import { errorResponse } from "../../helper/serverResponse.js";
+import { errorResponse } from "../middleware/serverResponse.js";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt, { compare } from "bcryptjs";
 import crypto from "crypto";
-import usermodel from "../model/usermodel.js";
+import usermodel from "../models/usermodel.js";
 import dotenv from "dotenv";
-
 
 dotenv.config();
 const secrectKey = crypto.randomBytes(48).toString("hex");
