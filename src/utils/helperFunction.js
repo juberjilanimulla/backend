@@ -9,18 +9,17 @@ import dotenv from "dotenv";
 dotenv.config();
 const secrectKey = crypto.randomBytes(48).toString("hex");
 
-export function generateAccessToken(id, email, role, firstname) {
+export function generateAccessToken(id, email, firstname) {
   const sessionid = createSession(id);
   const encoded_tokenPayload = {
     id,
     email,
-    role,
+
     firstname,
   };
   const public_tokenPayload = {
     id,
     email,
-    role,
     sessionid,
     firstname,
   };
@@ -40,16 +39,6 @@ export function validatetoken(token) {
   } catch (error) {
     throw error;
   }
-}
-
-export async function isAdminMiddleware(req, res, next) {
-  const isAdmin = res.locals.role;
-  // console.log("isAdmin", isAdmin);
-  if (!isAdmin || isAdmin !== "Admin") {
-    errorResponse(res, 403, "user not authorized");
-    return;
-  }
-  next();
 }
 
 // auth middleware
@@ -74,13 +63,12 @@ export function authMiddleware(req, res, next) {
   try {
     const decoded = jwt.verify(encoded_token, secrectKey);
 
-    if (!decoded.id || !decoded.role || !decoded.email) {
+    if (!decoded.id || !decoded.email) {
       console.log("Not authorized");
       return res.status(401).json("Unauthorize user");
     }
 
     res.locals["id"] = decoded.id;
-    res.locals["role"] = decoded.role;
     res.locals["email"] = decoded.email;
 
     next();
@@ -132,10 +120,8 @@ export async function Admin() {
         firstname: "admin",
         lastname: "admin",
         email: email,
-        role: "Admin",
-        mobile: "+91 (040) 2999 4717",
+        mobile: "+91 8600710244",
         password: bcryptPassword("1234"),
-        approved: true,
       });
     } else {
       console.log("admin already exist");

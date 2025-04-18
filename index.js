@@ -10,15 +10,15 @@ import { Admin } from "./src/utils/helperFunction.js";
 const app = express();
 const port = config.PORT;
 
-app.set("trust proxy", true);
-morgan.token("remote-addr", function (req) {
-  return req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-});
+// app.set("trust proxy", true);
+// morgan.token("remote-addr", function (req) {
+//   return req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+// });
 
-morgan.token("url", (req) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  return req.originalUrl;
-});
+// morgan.token("url", (req) => {
+//   const url = new URL(req.url, `http://${req.headers.host}`);
+//   return req.originalUrl;
+// });
 
 app.use(
   morgan(

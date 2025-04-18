@@ -18,3 +18,13 @@ export async function createpostHandler(req, res) {
     errorResponse(res, 500, "internal server error");
   }
 }
+
+export async function getallpostHandler(req, res) {
+  try {
+    const post = await postmodel.find();
+    successResponse(res, "success", post);
+  } catch (error) {
+    console.log("error", error);
+    errorResponse(res, 500, "internal server error");
+  }
+}
