@@ -5,6 +5,7 @@ const postSchema = new Schema(
     title: String,
     content: String,
     author: String,
+  
   },
   { timestamps: true, versionKey: false }
 );

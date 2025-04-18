@@ -28,3 +28,41 @@ export async function getallpostHandler(req, res) {
     errorResponse(res, 500, "internal server error");
   }
 }
+
+export async function updatepostHandler(req, res) {
+  try {
+    const { _id, ...updatedData } = req.body;
+    const options = { new: true };
+    if (!updatedData.title || !updatedData.content || !updatedData.author) {
+      errorResponse(res, 404, "Some params are missing");
+      return;
+    }
+    const updated = await postmodel.findByIdAndUpdate(
+      _id,
+      updatedData,
+      options
+    );
+
+    successResponse(res, "success Updated", updated);
+  } catch (error) {
+    console.log("error", error);
+    errorResponse(res, 500, "internal server error");
+  }
+}
+
+export async function deletepostHandler(req, res) {
+  try {
+    const { _id } = req.body;
+    if (!_id) {
+      return errorResponse(res, 400, "some params are missing");
+    }
+    const jobposting = await postmodel.findByIdAndDelete({ _id: _id });
+    if (!jobposting) {
+      return errorResponse(res, 404, "jobposting id not found");
+    }
+    successResponse(res, "Success");
+  } catch (error) {
+    console.log("error", error);
+    errorResponse(res, 500, "internal server error");
+  }
+}
