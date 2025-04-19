@@ -34,7 +34,6 @@ export function generateAccessToken(id, email, firstname) {
 
 export function validatetoken(token) {
   try {
-    // console.log("tok", token);
     return jwt.verify(token, secrectKey);
   } catch (error) {
     throw error;

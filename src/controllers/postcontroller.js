@@ -56,9 +56,9 @@ export async function deletepostHandler(req, res) {
     if (!_id) {
       return errorResponse(res, 400, "some params are missing");
     }
-    const jobposting = await postmodel.findByIdAndDelete({ _id: _id });
-    if (!jobposting) {
-      return errorResponse(res, 404, "jobposting id not found");
+    const post = await postmodel.findByIdAndDelete({ _id: _id });
+    if (!post) {
+      return errorResponse(res, 404, "post id not found");
     }
     successResponse(res, "Success");
   } catch (error) {

@@ -5,8 +5,11 @@ import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import postRouter from "./src/routes/postRouter.js";
-import { Admin } from "./src/utils/helperFunction.js";
+import { Admin, authMiddleware } from "./src/utils/helperFunction.js";
 import authRouter from "./src/routes/authRouter.js";
+import userRouter from "./src/routes/userRouter.js";
+import todosRouter from "./src/routes/todosRouter.js";
+import commentRouter from "./src/routes/commentRouter.js";
 
 const app = express();
 const port = config.PORT;
@@ -51,6 +54,9 @@ app.use((err, req, res, next) => {
 
 app.use("/api/post", postRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/user", authMiddleware, userRouter);
+app.use("/api/todos", todosRouter);
+app.use("/api/comment", commentRouter);
 // not found
 // app.use("*", (req, res) => {
 //   res.status(403).json({
